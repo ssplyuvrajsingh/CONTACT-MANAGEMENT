@@ -1,0 +1,85 @@
+﻿@using CONTACT_MANAGEMENT.Models
+@model List<ContactManagementModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div>
+    <table>
+        <tr>
+            <td>
+                <h1>
+                    Search Email Id
+                </h1>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <input type="text" />
+            </td>
+            <td>
+                <a href="@Url.Action("About","Home")">
+                    <img style="max-width:20px;" src="~/Content/Images/Add.png" />
+                </a>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+<div>
+    <h1>Contact Directory</h1>
+    <table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("About","Home", new { item.Id })">
+                        <img style="max-width:20px;" src="~/Content/Images/Edit.png" />
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+
+                <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @if (item.IsFav.HasValue && !(bool)item.IsFav)
+                    {
+                        <a href="@Url.Action("AddFav","Home", new { id = item.Id, status = true })">
+                            <img style="max-width:20px;" src="~/Content/Images/Un-Fav.jpg" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("AddFav","Home", new { id = item.Id, status = false })">
+                            <img style="max-width:30px;" src="~/Content/Images/Fav.jpg" />
+                        </a>
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="@Url.Action("DeleteContact","Home", new { item.Id })">
+                        <img style="max-width:20px;" src="~/Content/Images/Delete.jpg" />
+                    </a>
+                </td>
+                <td>
+                    @item.EmailAddress
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
